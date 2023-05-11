@@ -35,4 +35,4 @@
     </tbody>
 </table>
 
-<a href="#">Passer au paiement</a>
+<a href="#">Valider mon panier</a>
