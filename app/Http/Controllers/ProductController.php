@@ -50,9 +50,21 @@ class ProductController extends Controller
 
         $cart = Cart::where('user_id', Auth::user()->id)
             ->where('product_id', $product->id)
-            ->limit(1)
-            ->get();
+            ->first();
 
-        dd($cart);
+        if (isset($cart)) {
+            // Le produit existe déjà dans le panier
+            Cart::where('id', $cart->id)->update([
+                    'quantity' => $cart->quantity+1
+                ]);
+        }else {
+            // Le produit n'existe pas encore dans le panier, alors créez une nouvelle entrée
+            Cart::create([
+                "user_id" => Auth::user()->id,
+                "product_id" => $product->id,
+                "quantity" => 1,
+                "price" => $product->prix,
+            ]);
+        }            
     }
 }

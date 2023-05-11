@@ -4,4 +4,4 @@
 <P>{{ $product->description }}</P>
 <P>{{ $product->prix }}€</P>
 
-<a href="#">Ajouter au panier</a>
+<a href="{{ route('addtocart', $product) }}">Ajouter au panier</a>
