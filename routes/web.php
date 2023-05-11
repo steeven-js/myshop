@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 
@@ -30,7 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/addtocart/{product}', [ProductController::class, 'addToCart'])->name('addtocart');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+
+    Route::get('/addtocart/{product}', [CartController::class, 'add'])->name('addtocart');
 });
 
 require __DIR__.'/auth.php';
