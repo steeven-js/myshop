@@ -8,7 +8,10 @@
                 Quantité
             </th>
             <th>
-                Prix
+                Prix unitaire
+            </th>
+            <th>
+                Prix total
             </th>
         </tr>
     </thead>
@@ -24,7 +27,12 @@
                 <td>
                     <p>{{ $itemcart->price }}€</p>
                 </td>
+                <td>
+                    <p>{{ ($itemcart->price) * ($itemcart->quantity) }}€</p>
+                </td>
             </tr>
         @endforeach
     </tbody>
 </table>
+
+<a href="#">Passer au paiement</a>
