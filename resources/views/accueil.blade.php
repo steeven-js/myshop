@@ -3,12 +3,10 @@
 @section('main')
     <div class="masonry-loader masonry-loader-showing">
         <div class="row products product-thumb-info-list" data-plugin-masonry data-plugin-options="{'layoutMode': 'fitRows'}">
-
-            <div class="col-12 col-sm-6 col-lg-3">
-                <p>Je suis ici</p>
-            </div>
+            <x-product.card/>
         </div>
     </div>
+
     <div>
 
         </ul>
