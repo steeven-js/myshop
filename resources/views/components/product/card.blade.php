@@ -18,7 +18,12 @@
             </a>
             <a href="shop-product-sidebar-left.html">
                 <div class="product-thumb-info-image">
-                    <img alt="" class="img-fluid" src="/img/products/product-grey-1.jpg">
+                    {{-- @dd($itemProduct->image) --}}
+                    @if (isset($itemProduct->image))
+                        <img src="{{ Storage::url($itemProduct->image) }}" class="img-fluid" alt="">
+                    @else
+                        <img alt="" class="img-fluid" src="/img/products/product-grey-1.jpg">
+                    @endif
 
                 </div>
             </a>
@@ -26,10 +31,11 @@
         <div class="d-flex justify-content-between">
             <div>
                 <a href="#"
-                    class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">electronics</a>
+                    class="d-block text-uppercase text-decoration-none text-color-default text-color-hover-primary line-height-1 text-0 mb-1">{{$itemProduct->category->name}}</a>
                 <h3 class="text-3-5 font-weight-medium font-alternative text-transform-none line-height-3 mb-0">
-                    <a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">Photo
-                        Camera</a>
+                    <a href="shop-product-sidebar-right.html" class="text-color-dark text-color-hover-primary">
+                        {{Str::limit($itemProduct->name), 30}}
+                    </a>
                 </h3>
             </div>
             <a href="#" class="text-decoration-none text-color-default text-color-hover-dark text-4"><i
@@ -40,8 +46,8 @@
                 data-plugin-options="{'displayOnly': true, 'color': 'default', 'size':'xs'}">
         </div>
         <p class="price text-5 mb-3">
-            <span class="sale text-color-dark font-weight-semi-bold">$69,00</span>
-            <span class="amount">$59,00</span>
+            <span class="sale text-color-dark font-weight-semi-bold">{{$itemProduct->prix}}€</span>
+            <span class="amount">{{$itemProduct->prix}}€</span>
         </p>
     </div>
 </div>
