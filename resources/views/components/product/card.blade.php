@@ -18,7 +18,7 @@
             </a>
             <a href="shop-product-sidebar-left.html">
                 <div class="product-thumb-info-image">
-                    <img alt="" class="img-fluid" src="img/products/product-grey-1.jpg">
+                    <img alt="" class="img-fluid" src="/img/products/product-grey-1.jpg">
 
                 </div>
             </a>
