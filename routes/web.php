@@ -18,7 +18,7 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', [ProductController::class, 'index'])->name('accueil');
 
-Route::get('/filtre/{id}', [ProductController::class, 'index'])->name('accueil');
+Route::get('/filtre/{id}', [ProductController::class, 'index'])->name('accueil.category');
 
 Route::get('/detail/{product}', [ProductController::class, 'detail'])->name('accueil.detail');
 

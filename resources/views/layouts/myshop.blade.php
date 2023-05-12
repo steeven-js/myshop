@@ -10,32 +10,32 @@
 		<link id="googleFonts" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800%7CShadows+Into+Light%7CPlayfair+Display:400&display=swap" rel="stylesheet" type="text/css">
 
 		<!-- Vendor CSS -->
-		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css">
-		<link rel="stylesheet" href="vendor/animate/animate.compat.css">
-		<link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.min.css">
-		<link rel="stylesheet" href="vendor/owl.carousel/assets/owl.carousel.min.css">
-		<link rel="stylesheet" href="vendor/owl.carousel/assets/owl.theme.default.min.css">
-		<link rel="stylesheet" href="vendor/magnific-popup/magnific-popup.min.css">
-		<link rel="stylesheet" href="vendor/bootstrap-star-rating/css/star-rating.min.css">
-		<link rel="stylesheet" href="vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.css">
+		<link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/vendor/fontawesome-free/css/all.min.css">
+		<link rel="stylesheet" href="/vendor/animate/animate.compat.css">
+		<link rel="stylesheet" href="/vendor/simple-line-icons/css/simple-line-icons.min.css">
+		<link rel="stylesheet" href="/vendor/owl.carousel/assets/owl.carousel.min.css">
+		<link rel="stylesheet" href="/vendor/owl.carousel/assets/owl.theme.default.min.css">
+		<link rel="stylesheet" href="/vendor/magnific-popup/magnific-popup.min.css">
+		<link rel="stylesheet" href="/vendor/bootstrap-star-rating/css/star-rating.min.css">
+		<link rel="stylesheet" href="/vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.css">
 
 		<!-- Theme CSS -->
-		<link rel="stylesheet" href="css/theme.css">
-		<link rel="stylesheet" href="css/theme-elements.css">
-		<link rel="stylesheet" href="css/theme-blog.css">
-		<link rel="stylesheet" href="css/theme-shop.css">
+		<link rel="stylesheet" href="/css/theme.css">
+		<link rel="stylesheet" href="/css/theme-elements.css">
+		<link rel="stylesheet" href="/css/theme-blog.css">
+		<link rel="stylesheet" href="/css/theme-shop.css">
 
 		<!-- Skin CSS -->
-		<link id="skinCSS" rel="stylesheet" href="css/skins/default.css">
+		<link id="skinCSS" rel="stylesheet" href="/css/skins/default.css">
 
 		<!-- Theme Custom CSS -->
-		<link rel="stylesheet" href="css/custom.css">
+		<link rel="stylesheet" href="/css/custom.css">
 
 		<!-- Head Libs -->
-		<script src="vendor/modernizr/modernizr.min.js"></script>
+		<script src="/vendor/modernizr/modernizr.min.js"></script>
 
-</head>
+</head>/
 <body>
 
     <body data-plugin-page-transition>
@@ -51,7 +51,7 @@
 								<div class="header-row justify-content-between">
 									<div class="header-logo z-index-2 col-lg-2 px-0">
 										<a href="index.html">
-											<img alt="Porto" width="100" height="48" data-sticky-width="82" data-sticky-height="40" data-sticky-top="84" src="img/logo-default-slim.png">
+											<img alt="Porto" width="100" height="48" data-sticky-width="82" data-sticky-height="40" data-sticky-top="84" src="/img/logo-default-slim.png">
 										</a>
 									</div>
 									<div class="header-nav-features header-nav-features-no-border col-lg-5 col-xl-6 px-0 ms-0">
@@ -156,57 +156,36 @@
 						</div>
 					</div> <!-- end header container -->
 
-					<div class="header-nav-bar header-nav-bar-top-border bg-light">
-						<div class="header-container container">
-							<div class="header-row">
-								<div class="header-column">
-									<div class="header-row justify-content-end">
-										<div class="header-nav header-nav-line header-nav-top-line header-nav-top-line-with-border justify-content-start" data-sticky-header-style="{'minResolution': 991}" data-sticky-header-style-active="{'margin-left': '105px'}" data-sticky-header-style-deactive="{'margin-left': '0'}">
-											<div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-3 header-nav-main-sub-effect-1 w-100">
-												<nav class="collapse w-100">
-													<ul class="nav nav-pills w-100" id="mainNav">
-														<li class="dropdown">
-															<a class="dropdown-item dropdown-toggle" href="index.html">
-																Home
-															</a>
+					<x-navigation.category :categories='$categories'/>
 
-                                                            
-
-													</ul>
-												</nav>
-											</div>
-											<button class="btn header-btn-collapse-nav" data-bs-toggle="collapse" data-bs-target=".header-nav-main nav">
-												<i class="fas fa-bars"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			</header>
 
-            @yield('main')
+			<div class="main shop pt-4">
+				<div class="container">
+					@yield('main')
+				</div>
+			</div>
+			
         </div>
 
         <!-- Vendor -->
-		<script src="vendor/plugins/js/plugins.min.js"></script>
-		<script src="vendor/bootstrap-star-rating/js/star-rating.min.js"></script>
-		<script src="vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.js"></script>
-		<script src="vendor/jquery.countdown/jquery.countdown.min.js"></script>
+		<script src="/vendor/plugins/js/plugins.min.js"></script>
+		<script src="/vendor/bootstrap-star-rating/js/star-rating.min.js"></script>
+		<script src="/vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.js"></script>
+		<script src="/vendor/jquery.countdown/jquery.countdown.min.js"></script>
 
 		<!-- Theme Base, Components and Settings -->
-		<script src="js/theme.js"></script>
+		<script src="/js/theme.js"></script>
 
 		<!-- Current Page Vendor and Views -->
-		<script src="js/views/view.shop.js"></script>
+		<script src="/js/views/view.shop.js"></script>
 
 		<!-- Theme Custom -->
-		<script src="js/custom.js"></script>
+		<script src="/js/custom.js"></script>
 
 		<!-- Theme Initialization Files -->
-		<script src="js/theme.init.js"></script>
+		<script src="/js/theme.init.js"></script>
 
 </body>
 </html>
