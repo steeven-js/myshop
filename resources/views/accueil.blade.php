@@ -1,22 +1,44 @@
 @extends('layouts.myshop')
-    @forelse ($categories as $itemcategories)
-        <a href="{{ route('accueil', $itemcategories->id) }}" class="mr-5">
-            {{ $itemcategories->name }}
-        </a>
-    @empty
-    @endforelse
 
-    {{ $products->links() }}
-    @forelse ($products as $itemproduct)
-        <a href="{{ route('accueil.detail', $itemproduct) }}">
-            <img class="h-full w-full object-cover object-center" src="{{ Storage::url($itemproduct->image) }}"
-                alt="" />
+@section("main")
 
-            <h3>{{ Str::limit($itemproduct->name, 20) }}</h3>
-        </a>
-    @empty
-        <p>Pas de produits</p>
-    @endforelse
-</body>
+<div>
 
-</html>
+    <h1>Categories</h1>
+
+    <ul>
+
+        @foreach ($categories as $itemCategory)
+
+        <li>
+
+            <a href="{{route('accueil', $itemCategory)}}">
+            {{$itemCategory->name}}
+            </a>
+
+        </li>
+
+        @endforeach
+
+            </ul>
+
+                <h1>Products</h1>
+
+            <ul>
+
+                @foreach ($products as $itemProduct)
+
+                <li>
+                    {{$itemProduct->name}}
+                    <a href="{{route('accueil.detail', $itemProduct)}}">
+                        Voir plus
+                    </a>
+                </li>
+
+                @endforeach
+
+            </ul>
+
+</div>
+
+@endsection
