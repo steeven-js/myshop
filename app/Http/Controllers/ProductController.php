@@ -11,30 +11,35 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     //
-    public function index($id = 0)
+
+    public function index($category = 0)
     {
-        // Si id != 0 on liste par catégories sinon on liste tout.
-        if ($id != 0) {
-            // Afficher les Product de la catégorie par date de création
-            $products = Product::where('category_id', $id)->orderBy('updated_at', 'desc')->paginate(10);
-        } else {
-            $products = Product::orderBy('updated_at', 'desc')->paginate(10);
+        //Lister les produits et les categories et filtrer les categories par les produits
+
+        $products = Product::OrderBy('created_at', 'asc')->paginate(10); // liste de mes produits
+
+        if ($category != 0) {
+            # code...
+            $products = Product::Where('category_id', $category)->OrderBy('created_at', 'asc')->paginate(10);
         }
-        $categories = Category::orderBy('name', 'ASC')->get();
 
-        // dd($categories);
+        $categories = Category::OrderBy('name', 'asc')->get(); // liste de mes catégories
 
-        return view('accueil', compact('products', 'categories'));
+        // dd($products) ;
+
+        return view('welcome', compact('products', 'categories')); 
+
     }
 
     public function detail(Product $product)
     {
-        // Afficher le détail du produits mais aussi les produits similaires
 
-        $products = Product::where('category_id', $product->category_id)->inRandomOrder()->limit(4)->get();
-        // dd($products);
+        //selectionner 4 produits qui ont la même catégorie qu'un produit aléatoirement
+        $products = Product::Where('category_id', $product->category_id)->inRandomOrder()->limit(4)->get();
+        $categories = Category::OrderBy('name', 'asc')->get(); // liste de mes catégories
 
-        return view('detail', compact('product'));
+        return view('detail', compact('product', 'products', 'categories')); 
+
     }
 
 }

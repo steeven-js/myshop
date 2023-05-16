@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Shop</title> 
+    <title>My Shop</title>
 
         <!-- Web Fonts  -->
 		<link id="googleFonts" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800%7CShadows+Into+Light%7CPlayfair+Display:400&display=swap" rel="stylesheet" type="text/css">
@@ -35,7 +35,7 @@
 		<!-- Head Libs -->
 		<script src="/vendor/modernizr/modernizr.min.js"></script>
 
-</head>/
+</head>
 <body>
 
     <body data-plugin-page-transition>
@@ -50,7 +50,7 @@
 							<div class="header-column w-100">
 								<div class="header-row justify-content-between">
 									<div class="header-logo z-index-2 col-lg-2 px-0">
-										<a href="index.html">
+										<a href="{{route('welcome')}}">
 											<img alt="Porto" width="100" height="48" data-sticky-width="82" data-sticky-height="40" data-sticky-top="84" src="/img/logo-default-slim.png">
 										</a>
 									</div>
@@ -113,8 +113,8 @@
 										</ul>
 										<div class="header-nav-features ps-0 ms-1">
 											<div class="header-nav-feature header-nav-features-cart header-nav-features-cart-big d-inline-flex top-2 ms-2">
-												<a href="#" class="header-nav-features-toggle" aria-label="">
-													<img src="img/icons/icon-cart-big.svg" height="30" alt="" class="header-nav-top-icon-img">
+												<a href="{{route('cart')}}" class="header-nav-features-toggle" aria-label="">
+													<img src="/img/icons/icon-cart-big.svg" height="30" alt="" class="header-nav-top-icon-img">
 													<span class="cart-info">
 														<span class="cart-qty">1</span>
 													</span>
@@ -122,13 +122,13 @@
 												<div class="header-nav-features-dropdown" id="headerTopCartDropdown">
 													<ol class="mini-products-list">
 														<li class="item">
-															<a href="#" title="Camera X1000" class="product-image"><img src="img/products/product-1.jpg" alt="Camera X1000"></a>
+															<a href="#" title="Camera X1000" class="product-image"><img src="/img/products/product-1.jpg" alt="Camera X1000"></a>
 															<div class="product-details">
 																<p class="product-name">
 																	<a href="#">Camera X1000 </a>
 																</p>
 																<p class="qty-price">
-																	 1X <span class="price">$890</span>
+																	1X <span class="price">$890</span>
 																</p>
 																<a href="#" title="Remove This Item" class="btn-remove"><i class="fas fa-times"></i></a>
 															</div>
@@ -156,24 +156,24 @@
 						</div>
 					</div> <!-- end header container -->
 
-					<x-navigation.category :categories='$categories'/>
+                    <x-navigation.category :categories='$categories'/>
 
 				</div>
 			</header>
 
-			<div class="main shop pt-4">
-				<div class="container">
-					@yield('main')
-				</div>
-			</div>
-			
+            <div class="main shop pt-4">
+                <div class="container">
+                    @yield('main')
+                </div>
+            </div>
+
         </div>
 
         <!-- Vendor -->
-		<script src="/vendor/plugins/js/plugins.min.js"></script>
-		<script src="/vendor/bootstrap-star-rating/js/star-rating.min.js"></script>
-		<script src="/vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.js"></script>
-		<script src="/vendor/jquery.countdown/jquery.countdown.min.js"></script>
+		<script src="vendor/plugins/js/plugins.min.js"></script>
+		<script src="vendor/bootstrap-star-rating/js/star-rating.min.js"></script>
+		<script src="vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.js"></script>
+		<script src="vendor/jquery.countdown/jquery.countdown.min.js"></script>
 
 		<!-- Theme Base, Components and Settings -->
 		<script src="/js/theme.js"></script>

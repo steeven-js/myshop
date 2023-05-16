@@ -2,16 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProductResource\Pages;
-use App\Filament\Resources\ProductResource\RelationManagers;
-use App\Models\Product;
 use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
 use Filament\Tables;
+use App\Models\Product;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
+use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
+use Nuhel\FilamentCroppie\Components\Croppie;
+use App\Filament\Resources\ProductResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\ProductResource\RelationManagers;
 
 class ProductResource extends Resource
 {
@@ -31,12 +33,15 @@ class ProductResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(150),
-                Forms\Components\Textarea::make('description')
+                    ->maxLength(100),
+                Forms\Components\RichEditor::make('description')
                     ->maxLength(65535),
-                Forms\Components\TextInput::make('prix')
-                    ->required(),
-                Forms\Components\FileUpload::make('image')
+                Forms\Components\TextInput::make('prix')->numeric(),
+
+                Croppie::make('image')
+                    ->enableOpen()->enableDownload()
+                    ->imageResizeTargetWidth('800')
+                    ->imageResizeTargetHeight('800')
             ]);
     }
 
@@ -45,11 +50,11 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('category.name'),
-                Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('description'),
-                Tables\Columns\TextColumn::make('prix'),
+                Tables\Columns\TextColumn::make('category.name')->searchable(),
+                Tables\Columns\TextColumn::make('user.name')->searchable(),
+                Tables\Columns\TextColumn::make('name')->searchable(),
+                Tables\Columns\TextColumn::make('description')->limit(50),
+                Tables\Columns\TextColumn::make('prix')->money('eur'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
@@ -57,6 +62,8 @@ class ProductResource extends Resource
             ])
             ->filters([
                 //
+                Filter::make('categorie')
+                    ->query(fn (Builder $query): Builder => $query->where('category_id', true))
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -65,14 +72,14 @@ class ProductResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -80,5 +87,5 @@ class ProductResource extends Resource
             'create' => Pages\CreateProduct::route('/create'),
             'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
-    }    
+    }
 }

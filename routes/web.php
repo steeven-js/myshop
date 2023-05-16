@@ -16,12 +16,6 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', [ProductController::class, 'index'])->name('accueil');
-
-Route::get('/filtre/{id}', [ProductController::class, 'index'])->name('accueil.category');
-
-Route::get('/detail/{product}', [ProductController::class, 'detail'])->name('accueil.detail');
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -30,10 +24,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
+    Route::get('/addtocart/{product}', [CartController::class, 'addToCart'])->name('addtocart'); //Ne peut ajouter dans le panier que les utilisateurs connectés 
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
-    Route::get('/addtocart/{product}', [CartController::class, 'add'])->name('addtocart');
 });
 
 require __DIR__.'/auth.php';
+
+// Route pour lister les produits
+Route::get('/', [ProductController::class, 'index'])->name('welcome'); 
+
+// Route pour filtrer les categories
+Route::get('/filtre/{category}', [ProductController::class, 'index'])->name('welcome.filtre'); 
+
+// Route pour afficher le détail de chaques produits 
+Route::get('/detail/{product}', [ProductController::class, 'detail'])->name('welcome.detail');  
