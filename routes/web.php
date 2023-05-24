@@ -26,6 +26,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/addtocart/{product}', [CartController::class, 'addToCart'])->name('addtocart'); //Ne peut ajouter dans le panier que les utilisateurs connectés 
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::get('/cart/del/{product}', [CartController::class, 'decrementCartItem'])->name('decrementCartItem');
+    Route::get('/cart/add/{product}', [CartController::class, 'incrementCartItem'])->name('incrementCartItem');
+
+    Route::get('/cart/chekout', [CartController::class, 'checkout'])->name('checkout');
 
 });
 

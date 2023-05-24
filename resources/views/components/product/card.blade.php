@@ -40,7 +40,7 @@
             <input type="text" class="d-none" value="5" title="" data-plugin-star-rating data-plugin-options="{'displayOnly': true, 'color': 'default', 'size':'xs'}">
         </div>
         <p class="price text-5 mb-3">
-            {{$itemProduct->prix}}
+            {{$itemProduct->prix}}€
         </p>
     </div>
 </div>

@@ -48,9 +48,9 @@
                             </td>
                             <td class="product-quantity">
                                 <div class="quantity float-none m-0">
-                                    <input type="button" class="minus text-color-hover-light bg-color-hover-primary border-color-hover-primary" value="-">
+                                    <a href="{{route('decrementCartItem', $itemCart->product)}}"><input type="button" class="minus text-color-hover-light bg-color-hover-primary border-color-hover-primary" value="-"></a>
                                     <input type="text" class="input-text qty text" title="Qty" value="{{$itemCart->quantity}}" name="quantity" min="1" step="1">
-                                    <input type="button" class="plus text-color-hover-light bg-color-hover-primary border-color-hover-primary" value="+">
+                                    <a href="{{route('incrementCartItem', $itemCart->product)}}"><input type="button" class="plus text-color-hover-light bg-color-hover-primary border-color-hover-primary" value="+"></a>
                                 </div>
                             </td>
                             <td class="product-subtotal text-end">
@@ -126,7 +126,7 @@
 
                     </tbody>
                 </table>
-                <a href="shop-checkout.html" class="btn btn-dark btn-modern w-100 text-uppercase bg-color-hover-primary border-color-hover-primary border-radius-0 text-3 py-3">Proceed to Checkout <i class="fas fa-arrow-right ms-2"></i></a>
+                <a href="{{ route('checkout') }}" class="btn btn-dark btn-modern w-100 text-uppercase bg-color-hover-primary border-color-hover-primary border-radius-0 text-3 py-3">Proceed to Checkout <i class="fas fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </div>
