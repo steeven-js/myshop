@@ -1,7 +1,6 @@
 @extends('layouts.myshop')
 @section('main')
     <div role="main" class="main shop pb-4">
-
         <div class="container">
 
             <div class="row justify-content-center">
@@ -53,8 +52,14 @@
                         </div>
                         <div class="text-center mt-4 mt-md-0">
                             <span>
-                                Total <br>
-                                <strong class="text-color-dark">{{ $order->somme }}€</strong>
+                                Statut <br>
+                                <strong class="text-color-dark">
+                                    @if ($order->statut == 0)
+                                        Commande validée
+                                    @elseif ($order->statut == 1)
+                                        Commande en cours de préparation
+                                    @endif
+                                </strong>
                             </span>
                         </div>
                     </div>

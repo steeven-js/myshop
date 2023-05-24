@@ -134,6 +134,7 @@ class CartController extends Controller
         $order = Order::create([
             'user_id' => Auth::user()->id,
             'somme' => $total,
+            'statut' => 0,
         ]);
         
         // dd($order);
@@ -149,7 +150,7 @@ class CartController extends Controller
                 'product_name' => $product->name,
                 'category_name' => $product->category->name, // Récupérer le nom de la catégorie
                 'quantity' => $cartItem->quantity,
-                'prix' => $cartItem->prix
+                'prix' => $cartItem->prix,
             ]);
         }
 

@@ -16,6 +16,7 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'somme',
+        'statut',
     ];
 
     public function user(): BelongsTo

@@ -19,6 +19,12 @@
                         <th>
                             Prix Total
                         </th>
+                        <th>
+                            Statut
+                        </th>
+                        <th>
+                            Action
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,7 +40,14 @@
                                 {{ $item->created_at }}
                             </td>
                             <td>
-                                {{ $item->somme }}€
+                                {{ $item->somme }} €
+                            </td>
+                            <td>
+                                @if ($item->statut == 0)
+                                    <p>Commande validée</p>
+                                @elseif ($item->statut == 1)
+                                    <p>Commande en cours de préparation</p>
+                                @endif
                             </td>
                             <td>
                                 <a href="{{ route('commandeDetail', $item->id) }}">
@@ -43,7 +56,7 @@
                             </td>
                         </tr>
                     @empty
-                        <p>Vous n'avez pas de commande. <a href="#">Parcourez notre catalogue de produits</a></p>
+                        <p>Vous n'avez pas de commande. <a href="{{ route('welcome') }}">Parcourez notre catalogue de produits</a></p>
                     @endforelse
 
                 </tbody>
