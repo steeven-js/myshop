@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 
@@ -24,12 +25,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::get('/addtocart/{product}', [CartController::class, 'addToCart'])->name('addtocart'); //Ne peut ajouter dans le panier que les utilisateurs connectés 
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
     Route::get('/cart/del/{product}', [CartController::class, 'decrementCartItem'])->name('decrementCartItem');
     Route::get('/cart/add/{product}', [CartController::class, 'incrementCartItem'])->name('incrementCartItem');
 
     Route::get('/cart/chekout', [CartController::class, 'checkout'])->name('checkout');
+
+    Route::get('/profile/commande', [OrderController::class, 'index'])->name('commande');
+    Route::get('/profile/commande/{order}', [OrderController::class, 'show'])->name('commandeDetail');
 
 });
 

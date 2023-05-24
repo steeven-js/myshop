@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\Category;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -12,53 +15,33 @@ class OrderController extends Controller
     public function index()
     {
         //
-    }
+        $categories = Category::OrderBy('name', 'asc')->get(); // liste de mes catégories
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $orders = Order::orderBy('created_at', 'desc')->get();
+
+        // dd($orders);
+
+        return view('Commande', compact('categories', 'orders'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
-     * Display the specified resource.
+     * Show the details of a specific order.
      */
-    public function show(string $id)
+    public function show(Order $order)
     {
-        //
-    }
+        $categories = Category::OrderBy('name', 'asc')->get(); // liste de mes catégories
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Récupérer les détails de la commande spécifique
+        $orderDetails = $order->orderDetails;
+
+        // dd($orderDetails);
+
+        // Passer les détails de la commande à la vue
+        return view('CommandeDetail', compact('categories', 'order', 'orderDetails'));
     }
 }

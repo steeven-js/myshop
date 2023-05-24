@@ -139,9 +139,15 @@ class CartController extends Controller
         // dd($order);
         // Enregistrer les détails de la commande (éléments du panier)
         foreach ($cartItems as $cartItem) {
+            // Je récupère le produit par rapport à son id
+            $product = Product::find($cartItem->product_id);
+            // dd($product->category->name);
+        
             OrderDetail::create([
                 'order_id' => $order->id,
                 'product_id' => $cartItem->product_id,
+                'product_name' => $product->name,
+                'category_name' => $product->category->name, // Récupérer le nom de la catégorie
                 'quantity' => $cartItem->quantity,
                 'prix' => $cartItem->prix
             ]);
@@ -151,7 +157,7 @@ class CartController extends Controller
         Cart::where('user_id', Auth::user()->id)->delete();
 
         // Rediriger vers une page de confirmation ou toute autre action appropriée
-        return redirect(route('welcome'));
+        return redirect(route('commande'));
     }
 
 
