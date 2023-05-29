@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Order;
+use App\Models\Address;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -47,5 +48,10 @@ class User extends Authenticatable
     public function order(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function address(): HasMany
+    {
+        return $this->hasMany(Address::class);
     }
 }
