@@ -21,7 +21,7 @@ class OrderController extends Controller
 
         // dd($orders);
 
-        return view('Commande', compact('categories', 'orders'));
+        return view('order', compact('categories', 'orders'));
     }
 
     /**
@@ -30,18 +30,18 @@ class OrderController extends Controller
     /**
      * Show the details of a specific order.
      */
-    public function show(Order $order)
+    public function show($reference)
     {
         $categories = Category::OrderBy('name', 'asc')->get(); // liste de mes catégories
 
-
+        $order = Order::where('reference', $reference)->first();
 
         // Récupérer les détails de la commande spécifique
         $orderDetails = $order->orderDetails;
 
-        // dd($orderDetails);
-
+        // dd($order);
+        
         // Passer les détails de la commande à la vue
-        return view('CommandeDetail', compact('categories', 'order', 'orderDetails'));
+        return view('order_detail', compact('categories', 'order', 'orderDetails'));
     }
 }

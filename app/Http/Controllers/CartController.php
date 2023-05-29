@@ -130,11 +130,23 @@ class CartController extends Controller
             $total += $cartItem->quantity * $cartItem->prix;
         }
 
+        $date = now(); // Obtient la date et l'heure actuelles
+
+        // Convertir la date en format jour-mois-année
+        $dateString = $date->format('d-m-Y');
+        
+        // Générer un uniqid
+        $uniqid = uniqid();
+        
+        // Concaténer la date et uniqid
+        $reference = $dateString . '-' . $uniqid;
+        
         // Créer une commande
         $order = Order::create([
             'user_id' => Auth::user()->id,
             'somme' => $total,
             'statut' => 0,
+            'reference' => $reference
         ]);
         
         // dd($order);
@@ -158,7 +170,7 @@ class CartController extends Controller
         Cart::where('user_id', Auth::user()->id)->delete();
 
         // Rediriger vers une page de confirmation ou toute autre action appropriée
-        return redirect(route('commande'));
+        return redirect(route('stripe', $order->reference));
     }
 
 

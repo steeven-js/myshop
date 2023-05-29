@@ -38,7 +38,7 @@ class ProductController extends Controller
         $products = Product::Where('category_id', $product->category_id)->inRandomOrder()->limit(4)->get();
         $categories = Category::OrderBy('name', 'asc')->get(); // liste de mes catégories
 
-        return view('detail', compact('product', 'products', 'categories')); 
+        return view('product_detail', compact('product', 'products', 'categories')); 
 
     }
 

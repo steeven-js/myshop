@@ -3,8 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\StripeController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\OrderCancelController;
+use App\Http\Controllers\OrderSuccessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +21,6 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -33,8 +34,15 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/cart/chekout', [CartController::class, 'checkout'])->name('checkout');
 
-    Route::get('/profile/commande', [OrderController::class, 'index'])->name('commande');
-    Route::get('/profile/commande/{order}', [OrderController::class, 'show'])->name('commandeDetail');
+    Route::get('/commande/create-session/{reference}', [StripeController::class, 'stripe_create_session'])->name('stripe');
+
+    Route::get('/commande/merci/{stripe_id}', [OrderSuccessController::class, 'index'])->name('order_success');
+    Route::get('/commande/error/{stripe_id}', [OrderCancelController::class, 'index'])->name('order_cancel');
+
+    Route::get('/account', [AccountController::class, 'index'])->name('account');
+
+    Route::get('/account/commande', [OrderController::class, 'index'])->name('order');
+    Route::get('/account/commande/{reference}', [OrderController::class, 'show'])->name('order.detail');
 
 });
 
