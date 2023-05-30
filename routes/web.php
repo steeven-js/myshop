@@ -5,6 +5,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OrderCancelController;
@@ -41,18 +42,30 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/account', [AccountController::class, 'index'])->name('account');
 
+    Route::get('/account/address', [AddressController::class, 'index'])->name('address');
+
+    // Ajouter des adresses
+    Route::get('/account/address/add', [AddressController::class, 'formAdd'])->name('address.add');
+    Route::post('/account/address/add', [AddressController::class, 'add'])->name('address.add');
+
+    // Modifier des adresses
+    Route::get('/account/address/edit/{id}', [AddressController::class, 'formEdit'])->name('address.edit');
+    Route::post('/account/address/edit/{id}', [AddressController::class, 'edit'])->name('address.edit');
+
+    // Supprimer une adresse
+    Route::get('/account/address/del/{id}', [AddressController::class, 'delete'])->name('address.delete');
+
     Route::get('/account/commande', [OrderController::class, 'index'])->name('order');
     Route::get('/account/commande/{reference}', [OrderController::class, 'show'])->name('order.detail');
-
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // Route pour lister les produits
-Route::get('/', [ProductController::class, 'index'])->name('welcome'); 
+Route::get('/', [ProductController::class, 'index'])->name('welcome');
 
 // Route pour filtrer les categories
-Route::get('/filtre/{category}', [ProductController::class, 'index'])->name('welcome.filtre'); 
+Route::get('/filtre/{category}', [ProductController::class, 'index'])->name('welcome.filtre');
 
 // Route pour afficher le détail de chaques produits 
-Route::get('/detail/{product}', [ProductController::class, 'detail'])->name('welcome.detail');  
+Route::get('/detail/{product}', [ProductController::class, 'detail'])->name('welcome.detail');
