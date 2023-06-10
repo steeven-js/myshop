@@ -30,3 +30,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           local-dir: ./public/build/
           server-dir: /public_html/myshop/
+          
