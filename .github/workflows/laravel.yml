@@ -1,0 +1,33 @@
+name: Compilation et déploiement Laravel
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Vérifier le code
+        uses: actions/checkout@v2
+
+      - name: Installer les dépendances
+        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
+
+      - name: Compiler le code
+        run: |
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          php artisan optimize --force
+
+      - name: Déployer vers le serveur
+        uses: SamKirkland/FTP-Deploy-Action@3.x
+        with:
+          ftp-server: ${{ secrets.FTP_SERVER }}
+          ftp-username: ${{ secrets.FTP_USERNAME }}
+          ftp-password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./myshop
+          server-dir: /public_html/myshop
