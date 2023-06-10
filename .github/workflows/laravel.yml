@@ -19,6 +19,9 @@ jobs:
       - name: Installer les dépendances npm
         run: npm install
 
+      - name: Build
+        run: npm run build
+
       - name: Compiler le code Laravel
         run: |
           php artisan config:cache
@@ -26,15 +29,12 @@ jobs:
           php artisan view:cache
           php artisan optimize --force
 
-      - name: Compiler les dépendances npm
-        run: npm run production
-
       - name: Déployer vers le serveur
-        uses: appleboy/scp-action@v1
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
           ftp-server: ${{ secrets.FTP_SERVER }}
           ftp-username: ${{ secrets.FTP_USERNAME }}
           ftp-password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./myshop
+          local-dir: ./
           server-dir: /public_html/myshop
           overwrite: true
