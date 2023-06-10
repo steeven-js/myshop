@@ -28,5 +28,5 @@ jobs:
           server: jsprod.fr
           username: u957733266
           password: Azerty972
-          local-dir: ./public/build/
+          local-dir: ./
           server-dir: /public_html/myshop/
