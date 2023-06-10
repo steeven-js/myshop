@@ -22,13 +22,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Compiler le code Laravel
-        run: |
-          php artisan config:cache
-          php artisan route:cache
-          php artisan view:cache
-          php artisan optimize --force
-
       - name: Déployer vers le serveur
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
