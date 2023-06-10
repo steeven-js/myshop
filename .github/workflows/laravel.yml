@@ -10,31 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Vérifier le code
-      uses: actions/checkout@v2
+      - name: Vérifier le code
+        uses: actions/checkout@v2
 
-    - name: Installer les dépendances PHP
-      run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
+      - name: Installer les dépendances PHP
+        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
-    - name: Installer les dépendances npm
-      run: npm install
+      - name: Installer les dépendances npm
+        run: npm install
 
-    - name: Compiler le code Laravel
-      run: |
-        php artisan config:cache
-        php artisan route:cache
-        php artisan view:cache
-        php artisan optimize --force
+      - name: Build
+        run: npm run build
 
-    - name: Compiler les dépendances npm
-      run: npm run production
-
-    - name: Déployer vers le serveur
-      uses: SamKirkland/FTP-Deploy-Action@4.0.0
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./dist/
-        server-dir: /public_html/myshop
+      - name: Déployer vers le serveur
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ${{ secrets.SERVER }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /public_html/myshop
 
