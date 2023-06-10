@@ -20,7 +20,7 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run build
+        run: npm run production
 
       - name: Déployer vers le serveur
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
@@ -28,6 +28,5 @@ jobs:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          local-dir: ./dist/
+          local-dir: ./public/build/
           server-dir: /public_html/myshop/
-
