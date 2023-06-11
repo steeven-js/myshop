@@ -30,4 +30,13 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
+
+    public function cleanOrder()
+    {
+        // Supprimer les détails de commande associés
+        $this->orderDetails()->delete();
+
+        // Supprimer la commande elle-même
+        $this->delete();
+    }
 }

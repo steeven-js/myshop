@@ -16,17 +16,26 @@ class CartController extends Controller
 
     public function index()
     {
-        # code...
-        $carts = Cart::Where('user_id', Auth::user()->id)->get();
-        $products = Product::OrderBy('created_at', 'asc')->paginate(10);
         $categories = Category::OrderBy('name', 'asc')->get(); // liste de mes catégories
+
+        $carts = Cart::Where('user_id', Auth::user()->id)->get();
+        $products = Product::OrderBy('created_at', 'asc')->paginate(5);
         $somme = 0;
+
+        $orders = Order::where('user_id', Auth::user()->id)->get();
+
 
         foreach ($carts as $itemCart) {
 
-            # code...
             $somme = ($itemCart->quantity * $itemCart->prix) + $somme;
         }
+
+        $orders = Order::where('statut', 0)->get();
+
+        foreach ($orders as $order) {
+            $order->cleanOrder();
+        }
+        
 
         return view('cart', compact('carts', 'products', 'categories', 'somme'));
     }
@@ -76,13 +85,13 @@ class CartController extends Controller
     public function incrementCartItem(Product $product)
     {
         // Vérifier si le produit existe dans le panier de l'utilisateur
-        $cart = Cart::where('user_id', Auth::user()->id)
+        $cartItem = Cart::where('user_id', Auth::user()->id)
             ->where('product_id', $product->id)
             ->first();
 
-        if ($cart) {
+        if ($cartItem) {
             // Incrémenter la quantité du produit dans le panier
-            $cart->update(['quantity' => $cart->quantity + 1]);
+            $cartItem->update(['quantity' => $cartItem->quantity + 1]);
             // dd($cart);
         } else {
             // Créer un nouvel élément dans le panier avec une quantité de 1
@@ -102,17 +111,17 @@ class CartController extends Controller
     public function decrementCartItem(Product $product)
     {
         // Vérifier si le produit existe dans le panier de l'utilisateur
-        $cart = Cart::where('user_id', Auth::user()->id)
+        $cartItem = Cart::where('user_id', Auth::user()->id)
             ->where('product_id', $product->id)
             ->first();
 
-        if ($cart) {
+        if ($cartItem) {
             // Décrémenter la quantité du produit dans le panier
-            if ($cart->quantity > 1) {
-                $cart->update(['quantity' => $cart->quantity - 1]);
+            if ($cartItem->quantity > 1) {
+                $cartItem->update(['quantity' => $cartItem->quantity - 1]);
             } else {
                 // Si la quantité est déjà 1, supprimer l'élément du panier
-                $cart->delete();
+                $cartItem->delete();
             }
         }
 
@@ -134,13 +143,13 @@ class CartController extends Controller
 
         // Convertir la date en format jour-mois-année
         $dateString = $date->format('d-m-Y');
-        
+
         // Générer un uniqid
         $uniqid = uniqid();
-        
+
         // Concaténer la date et uniqid
         $reference = $dateString . '-' . $uniqid;
-        
+
         // Créer une commande
         $order = Order::create([
             'user_id' => Auth::user()->id,
@@ -148,14 +157,14 @@ class CartController extends Controller
             'statut' => 0,
             'reference' => $reference
         ]);
-        
+
         // dd($order);
         // Enregistrer les détails de la commande (éléments du panier)
         foreach ($cartItems as $cartItem) {
             // Je récupère le produit par rapport à son id
             $product = Product::find($cartItem->product_id);
             // dd($product->category->name);
-        
+
             OrderDetail::create([
                 'order_id' => $order->id,
                 'product_id' => $cartItem->product_id,
@@ -165,9 +174,6 @@ class CartController extends Controller
                 'prix' => $cartItem->prix,
             ]);
         }
-
-        // Supprimer les éléments du panier de l'utilisateur
-        Cart::where('user_id', Auth::user()->id)->delete();
 
         // Rediriger vers une page de confirmation ou toute autre action appropriée
         return redirect(route('stripe', $order->reference));

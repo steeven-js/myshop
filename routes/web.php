@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart/del/{product}', [CartController::class, 'decrementCartItem'])->name('decrementCartItem');
     Route::get('/cart/add/{product}', [CartController::class, 'incrementCartItem'])->name('incrementCartItem');
 
+    Route::get('/cart/shipping', [CartController::class, 'shipping'])->name('shipping');
+
     Route::get('/cart/chekout', [CartController::class, 'checkout'])->name('checkout');
 
     Route::get('/commande/create-session/{reference}', [StripeController::class, 'stripe_create_session'])->name('stripe');

@@ -58,12 +58,16 @@ class StripeController extends Controller
             ]);
 
             $order->stripe_id = $checkout_session->id;
+
+            // dd($order);
+
             $order->save();
 
             return redirect($checkout_session->url);
         } else {
-            // La commande n'a pas été trouvée
-            // Gérez cette situation en conséquence
+
+            
+
         }
 
 
