@@ -2,29 +2,26 @@
 
 namespace App\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Address extends Model
+class OrderAddress extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'name',
-        'company',
+        'order_id',
         'address',
-        'postal',
+        'postal_code',
         'city',
         'country',
         'phone',
+        'address_id',
     ];
 
-    public function user(): BelongsTo
+    public function order(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Order::class);
     }
-
 }

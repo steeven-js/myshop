@@ -36,8 +36,11 @@ class OrderSuccessController extends Controller
             $orderClean->cleanOrder();
         }
 
+        $selectedAddress = $order->orderAddress; // Récupérer l'objet OrderAddress associé à la commande
+        $selectedCarrier = $order->orderCarrier; // Récupérer l'objet OrderCarrier associé à la commande
+
         // Retourner la vue d'ordre réussi avec les catégories et la commande
-        return view('order_success', compact('categories', 'order'));
+        return view('order_success', compact('categories', 'order', 'selectedAddress', 'selectedCarrier'));
     }
 
     public function show($reference)

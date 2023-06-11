@@ -5,20 +5,47 @@
 
         <div class="container">
 
-            <h3>Bonjour <b> </b></h3>
+            <h3>Merci <b> </b></h3>
             <br>
             <ul style="list-style:none;">
                 <li>Nous vous remercions pour votre commande n° <b>{{ $order->reference }}</b></li>
-                <li>Une confirmation vient de vous être envoyée par email à l'adresse suivante : <b>{{ $order->user->email }}</b></li>
-        
+                <li>Une confirmation vient de vous être envoyée par email à l'adresse suivante :
+                    <b>{{ $order->user->email }}</b>
+                </li>
+
                 <br>
-        
-                <li>Votre commande sera livrée par <b></b> à l'adresse suivante :</li>
-                <li></li> 
-        
+
+                <li>Votre commande sera livrée à l'adresse suivante :</li>
+                @if ($selectedAddress)
+                    <p>
+                        <strong>Address:</strong> {{ $selectedAddress->address }}<br>
+                        <strong>Postal Code:</strong> {{ $selectedAddress->postal }}<br>
+                        <strong>City:</strong> {{ $selectedAddress->city }}<br>
+                        <strong>Country:</strong> {{ $selectedAddress->country }}<br>
+                        <strong>Phone:</strong> {{ $selectedAddress->phone }}<br>
+                    </p>
+                @else
+                    <p>No address selected.</p>
+                @endif
+
                 <br>
-        
-                <li>Pour suivre votre commande, rendez-vous dans votre <a href="{{ route('account') }}"><b>compte </b></a></li>
+
+                <li>Par le transporteur suivant: </li>
+
+                @if ($selectedCarrier)
+                    <p>
+                        <strong>Name:</strong> {{ $selectedCarrier->name }}<br>
+                        <strong>Price:</strong> {{ $selectedCarrier->price }}<br>
+                        <strong>Description:</strong> {{ $selectedCarrier->description }}<br>
+                    </p>
+                @else
+                    <p>No carrier selected.</p>
+                @endif
+
+                <br>
+
+                <li>Pour suivre votre commande, rendez-vous dans votre <a href="{{ route('account') }}"><b>compte </b></a>
+                </li>
             </ul>
 
         </div>

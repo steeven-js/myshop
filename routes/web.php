@@ -8,8 +8,11 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\OrderCancelController;
 use App\Http\Controllers\OrderSuccessController;
+use App\Http\Controllers\ConfirmCheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,9 +36,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart/del/{product}', [CartController::class, 'decrementCartItem'])->name('decrementCartItem');
     Route::get('/cart/add/{product}', [CartController::class, 'incrementCartItem'])->name('incrementCartItem');
 
-    Route::get('/cart/shipping', [CartController::class, 'shipping'])->name('shipping');
+    Route::get('/cart/chekout', [CheckoutController::class, 'checkout'])->name('checkout');
 
-    Route::get('/cart/chekout', [CartController::class, 'checkout'])->name('checkout');
+    Route::get('/cart/shipping', [ShippingController::class, 'shipping'])->name('shipping');
+    Route::post('/cart/shipping', [ShippingController::class, 'store'])->name('shipping.store');
+
+
+    Route::get('/cart/confirm', [ConfirmCheckoutController::class, 'index'])->name('confirm');
 
     Route::get('/commande/create-session/{reference}', [StripeController::class, 'stripe_create_session'])->name('stripe');
 

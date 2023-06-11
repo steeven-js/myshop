@@ -38,11 +38,6 @@ class AddressController extends Controller
     // Créer la news
     public function add(Request $request)
     {
-        // dd(Auth::user()->id);
-        // Vérification des données du formulaire
-        /**
-         * Titre obligatoire
-         */
         $request->validate([
             'name' => 'required|min:2',
             'address' => 'required|min:2',
@@ -51,10 +46,8 @@ class AddressController extends Controller
             'country' => 'required|min:2',
             'phone' => 'required|min:2',
         ]);
-        // création d'une instance de class (model News) pour enregistrer en base .
-        
+    
         $address = new Address;
-        
         $address->user_id = Auth::user()->id;
         $address->name = $request->name;
         $address->address = $request->address;
@@ -62,13 +55,15 @@ class AddressController extends Controller
         $address->city = $request->city;
         $address->country = $request->country;
         $address->phone = $request->phone;
-        
-        // dd($address);
-        // Enregistrement des données
+    
+        // Concaténation des parties de l'adresse
+        $address->full_address = $request->address . '<br>' . $request->postal . ' ' . $request->city . '<br>' . $request->country;
+    
         $address->save();
-
+    
         return Redirect::route('address');
     }
+    
 
     public function show($id)
     {
@@ -100,7 +95,7 @@ class AddressController extends Controller
     public function edit(Request $request, $id)
     {
         $address = Address::findOrFail($id);
-
+    
         $request->validate([
             'name' => 'required|min:2',
             'address' => 'required|min:2',
@@ -109,20 +104,22 @@ class AddressController extends Controller
             'country' => 'required|min:2',
             'phone' => 'required|min:2',
         ]);
-
+    
         $address->name = $request->name;
         $address->address = $request->address;
         $address->postal = $request->postal;
         $address->city = $request->city;
         $address->country = $request->country;
         $address->phone = $request->phone;
-
-        // dd($address);
-
+    
+        // Mise à jour du champ "full_address"
+        $address->full_address = $request->address . '<br>' . $request->postal . ' ' . $request->city . '<br>' . $request->country;
+    
         $address->save();
-
-        return Redirect::route('address');
+    
+        return redirect(route('address'));
     }
+    
 
     /**
      * Supression

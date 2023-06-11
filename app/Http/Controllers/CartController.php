@@ -128,59 +128,6 @@ class CartController extends Controller
         return redirect(route('cart'));
     }
 
-    public function checkout()
-    {
-        // Récupérer le panier de l'utilisateur
-        $cartItems = Cart::where('user_id', Auth::user()->id)->get();
-
-        // Calculer la somme du panier
-        $total = 0;
-        foreach ($cartItems as $cartItem) {
-            $total += $cartItem->quantity * $cartItem->prix;
-        }
-
-        $date = now(); // Obtient la date et l'heure actuelles
-
-        // Convertir la date en format jour-mois-année
-        $dateString = $date->format('d-m-Y');
-
-        // Générer un uniqid
-        $uniqid = uniqid();
-
-        // Concaténer la date et uniqid
-        $reference = $dateString . '-' . $uniqid;
-
-        // Créer une commande
-        $order = Order::create([
-            'user_id' => Auth::user()->id,
-            'somme' => $total,
-            'statut' => 0,
-            'reference' => $reference
-        ]);
-
-        // dd($order);
-        // Enregistrer les détails de la commande (éléments du panier)
-        foreach ($cartItems as $cartItem) {
-            // Je récupère le produit par rapport à son id
-            $product = Product::find($cartItem->product_id);
-            // dd($product->category->name);
-
-            OrderDetail::create([
-                'order_id' => $order->id,
-                'product_id' => $cartItem->product_id,
-                'product_name' => $product->name,
-                'category_name' => $product->category->name, // Récupérer le nom de la catégorie
-                'quantity' => $cartItem->quantity,
-                'prix' => $cartItem->prix,
-            ]);
-        }
-
-        // Rediriger vers une page de confirmation ou toute autre action appropriée
-        return redirect(route('stripe', $order->reference));
-    }
-
-
-
     public function delete()
     {
         # code...
