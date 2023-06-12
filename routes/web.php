@@ -46,8 +46,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/commande/create-session/{reference}', [StripeController::class, 'stripe_create_session'])->name('stripe');
 
-    Route::get('/commande/merci/{stripe_id}', [OrderSuccessController::class, 'index'])->name('order_success');
-    Route::get('/commande/error/{stripe_id}', [OrderCancelController::class, 'index'])->name('order_cancel');
+    Route::get('/commande/merci/{checkout_session_id}', [OrderSuccessController::class, 'index'])->name('order_success');
+    Route::get('commande/erreur/{checkout_session_id}', [OrderCancelController::class, 'index'])->name('order_cancel');
 
     Route::get('/account', [AccountController::class, 'index'])->name('account');
 

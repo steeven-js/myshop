@@ -59,11 +59,22 @@
                                 {{ $order->somme }}€
                             </td>
                             <td>
-                                @if ($order->statut == 1)
-                                    <p>Commande validée</p>
-                                @elseif ($order->statut == 2)
-                                    <p>En cours de préparation</p>
-                                @endif
+                                @switch($order->statut)
+                                    @case(0)
+                                        Commande non payée
+                                    @break
+
+                                    @case(1)
+                                        Commande annulée
+                                    @break
+
+                                    @case(2)
+                                        Commande validée
+                                    @break
+
+                                    @default
+                                        Statut inconnu
+                                @endswitch
                             </td>
                             <td>
                                 <a href="{{ route('order.detail', $order->reference) }}">
@@ -71,16 +82,16 @@
                                 </a>
                             </td>
                         </tr>
-                    @empty
-                        @if (!$orders)
-                            <p>Vous n'avez pas de commande. <a href="{{ route('welcome') }}">Parcourez notre catalogue de
-                                    produits</a></p>
-                        @endif
-                    @endforelse
-                </tbody>
-            </table>
+                        @empty
+                            @if (!$orders)
+                                <p>Vous n'avez pas de commande. <a href="{{ route('welcome') }}">Parcourez notre catalogue de
+                                        produits</a></p>
+                            @endif
+                        @endforelse
+                    </tbody>
+                </table>
+
+            </div>
 
         </div>
-
-    </div>
-@endsection
+    @endsection

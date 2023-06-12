@@ -19,7 +19,7 @@
                 @if ($selectedAddress)
                     <p>
                         <strong>Address:</strong> {{ $selectedAddress->address }}<br>
-                        <strong>Postal Code:</strong> {{ $selectedAddress->postal }}<br>
+                        <strong>Postal Code:</strong> {{ $selectedAddress->postal_code }}<br>
                         <strong>City:</strong> {{ $selectedAddress->city }}<br>
                         <strong>Country:</strong> {{ $selectedAddress->country }}<br>
                         <strong>Phone:</strong> {{ $selectedAddress->phone }}<br>

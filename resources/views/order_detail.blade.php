@@ -27,7 +27,24 @@
                     <div class="card border-width-3 border-radius-0 border-color-success">
                         <div class="card-body text-center">
                             <p class="text-color-dark font-weight-bold text-4-5 mb-0"><i
-                                    class="fas fa-check text-color-success me-1"></i>Merci! Votre commande a été validée</p>
+                                    class="fas fa-check text-color-success me-1"></i>
+                                @switch($order->statut)
+                                    @case(0)
+                                        Commande non payée
+                                    @break
+
+                                    @case(1)
+                                        Commande annulée
+                                    @break
+
+                                    @case(2)
+                                        Merci! Votre commande a été validée
+                                    @break
+
+                                    @default
+                                        Statut inconnu
+                                @endswitch
+                            </p>
                         </div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between py-3 px-4 my-4">
@@ -53,13 +70,25 @@
                             <span>
                                 Statut <br>
                                 <strong class="text-color-dark">
-                                    @if ($order->statut == 0)
-                                        Commande validée
-                                    @elseif ($order->statut == 1)
-                                        En cours de préparation
-                                    @endif
+                                    @switch($order->statut)
+                                        @case(0)
+                                            Commande non payée
+                                        @break
+
+                                        @case(1)
+                                            Commande annulée
+                                        @break
+
+                                        @case(2)
+                                            Commande validée
+                                        @break
+
+                                        @default
+                                            Statut inconnu
+                                    @endswitch
                                 </strong>
                             </span>
+
                         </div>
                     </div>
                     <div class="card border-width-3 border-radius-0 border-color-hover-dark mb-4">
@@ -134,7 +163,7 @@
                                         </td>
                                         <td class="text-end">
                                             <strong class="text-color-dark"><span
-                                                    class="amount text-color-dark text-5">{{ $order->somme }}€</span></strong>
+                                                    class="amount text-color-dark text-5">{{ $order->somme + $selectedCarrier->price }}€</span></strong>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -143,7 +172,7 @@
                             @if ($selectedAddress)
                                 <p>
                                     <strong>Address:</strong> {{ $selectedAddress->address }}<br>
-                                    <strong>Postal Code:</strong> {{ $selectedAddress->postal }}<br>
+                                    <strong>Postal Code:</strong> {{ $selectedAddress->postal_code }}<br>
                                     <strong>City:</strong> {{ $selectedAddress->city }}<br>
                                     <strong>Country:</strong> {{ $selectedAddress->country }}<br>
                                     <strong>Phone:</strong> {{ $selectedAddress->phone }}<br>

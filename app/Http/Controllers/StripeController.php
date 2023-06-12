@@ -5,26 +5,23 @@ namespace App\Http\Controllers;
 use Stripe\Stripe;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\OrderCarrier;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
 use Illuminate\Support\Facades\Auth;
 
 class StripeController extends Controller
 {
-    //
     public function stripe_create_session($reference)
     {
         $order = Order::where('reference', $reference)->first();
 
-        $YOUR_DOMAIN = 'http://127.0.0.1:8000';
-        //$YOUR_DOMAIN = 'http://js-tech.fr';
+        $YOUR_DOMAIN = env('APP_URL');
         $product_for_stripe = [];
 
         if ($order) {
-            // La commande correspondante a été trouvée
             $orderDetails = $order->orderDetails;
 
-            // Panier
             foreach ($orderDetails as $orderDetail) {
                 $productObject = Product::where('name', $orderDetail->product_name)->first();
 
@@ -41,14 +38,29 @@ class StripeController extends Controller
                 ];
             }
 
-            // API Stripe pour le paiement
-            Stripe::setApiKey('sk_test_51LeOHYBy39DOXZlGW09bx55BbH1bl4HiaBQbUKUns3aW94VFvRowCJUx8b7gohpOWSe7g4ms1y57H3AAub444zsX00ehwupWiB');
+            $orderCarrier = OrderCarrier::where('order_id', $order->id)->first();
+
+            if ($orderCarrier) {
+                $transportPrice = $orderCarrier->price;
+                $transportName = $orderCarrier->name;
+
+                $product_for_stripe[] = [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'unit_amount' => $transportPrice * 100,
+                        'product_data' => [
+                            'name' => $transportName,
+                        ],
+                    ],
+                    'quantity' => 1,
+                ];
+            }
+
+            Stripe::setApiKey(env('STRIPE_API_KEY'));
 
             $checkout_session = Session::create([
                 'customer_email' => Auth::user()->email,
-                'line_items' => [
-                    $product_for_stripe
-                ],
+                'line_items' => $product_for_stripe,
                 'payment_method_types' => [
                     'card',
                 ],
@@ -58,18 +70,10 @@ class StripeController extends Controller
             ]);
 
             $order->stripe_id = $checkout_session->id;
-
-            // dd($order);
-
             $order->save();
 
             return redirect($checkout_session->url);
-        } else {
-
-            
-
         }
-
 
         return view('checkout');
     }
