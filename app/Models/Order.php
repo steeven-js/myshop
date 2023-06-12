@@ -48,16 +48,4 @@ class Order extends Model
     {
         return $this->hasOne(OrderCarrier::class);
     }
-
-    public function cleanOrder()
-    {
-        // Supprimer les détails de commande associés
-        $this->orderDetails()->delete();
-
-        // Supprimer les adresses de commande associées
-        $this->orderAddresses()->delete();
-
-        // Supprimer la commande elle-même
-        $this->delete();
-    }
 }

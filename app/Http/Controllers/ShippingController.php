@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Order;
@@ -27,7 +26,10 @@ class ShippingController extends Controller
         $order = Order::where('user_id', $user->id)->where('statut', 0)->first();
 
         // Récupérer le transporteur sélectionné de la commande en cours de l'utilisateur
-        $orderCarrier = OrderCarrier::where('order_id', $order->id)->first();
+        $orderCarrier = null;
+        if ($order) {
+            $orderCarrier = $order->orderCarrier;
+        }
 
         // Récupérer les transporteurs disponibles
         $carriers = Carrier::all();
@@ -50,61 +52,63 @@ class ShippingController extends Controller
         // Récupérer la commande en cours de l'utilisateur
         $order = Order::where('user_id', $user->id)->where('statut', 0)->first();
 
-        // Récupérer le transporteur sélectionné de la commande en cours de l'utilisateur
-        $orderCarrier = OrderCarrier::where('order_id', $order->id)->first();
+        if (!$order) {
+            // Créer une nouvelle commande si elle n'existe pas
+            $order = new Order([
+                'user_id' => $user->id,
+                'status' => 0,
+            ]);
+            $order->save();
+        }
 
-        if ($order) {
-            // Vérifier s'il existe déjà une adresse dans OrderAddress pour cette commande
-            $orderAddress = OrderAddress::where('order_id', $order->id)->first();
+        // Vérifier s'il existe déjà une adresse dans OrderAddress pour cette commande
+        $orderAddress = $order->orderAddress;
 
-            if ($orderAddress) {
-                // Mettre à jour l'adresse existante dans OrderAddress
-                $orderAddress->update([
-                    'address_id' => $addressId,
-                    'address' => $address->address,
-                    'postal_code' => $address->postal,
-                    'city' => $address->city,
-                    'country' => $address->country,
-                    'phone' => $address->phone,
-                ]);
-            } else {
-                // Créer une nouvelle entrée dans la table OrderAddress
-                $orderAddress = new OrderAddress([
-                    'order_id' => $order->id,
-                    'address_id' => $addressId,
-                    'address' => $address->address,
-                    'postal_code' => $address->postal,
-                    'city' => $address->city,
-                    'country' => $address->country,
-                    'phone' => $address->phone,
-                ]);
-                $orderAddress->save();
-            }
+        if ($orderAddress) {
+            // Mettre à jour l'adresse existante dans OrderAddress
+            $orderAddress->update([
+                'address_id' => $addressId,
+                'address' => $address->address,
+                'postal_code' => $address->postal,
+                'city' => $address->city,
+                'country' => $address->country,
+                'phone' => $address->phone,
+            ]);
+        } else {
+            // Créer une nouvelle entrée dans la table OrderAddress
+            $orderAddress = new OrderAddress([
+                'order_id' => $order->id,
+                'address_id' => $addressId,
+                'address' => $address->address,
+                'postal_code' => $address->postal,
+                'city' => $address->city,
+                'country' => $address->country,
+                'phone' => $address->phone,
+            ]);
+            $orderAddress->save();
+        }
 
-            if ($order) {
-                // Vérifier s'il existe déjà un transporteur dans OrderCarrier pour cette commande
-                $orderCarrier = OrderCarrier::where('order_id', $order->id)->first();
+        // Vérifier s'il existe déjà un transporteur dans OrderCarrier pour cette commande
+        $orderCarrier = $order->orderCarrier;
 
-                if ($orderCarrier) {
-                    // Mettre à jour le transporteur existant dans OrderCarrier
-                    $orderCarrier->update([
-                        'carrier_id' => $carrierId,
-                        'name' => $carrier->name,
-                        'description' => $carrier->description,
-                        'price' => $carrier->price,
-                    ]);
-                } else {
-                    // Créer une nouvelle entrée dans la table OrderCarrier
-                    $orderCarrier = new OrderCarrier([
-                        'order_id' => $order->id,
-                        'carrier_id' => $carrierId,
-                        'name' => $carrier->name,
-                        'description' => $carrier->description,
-                        'price' => $carrier->price,
-                    ]);
-                    $orderCarrier->save();
-                }
-            }
+        if ($orderCarrier) {
+            // Mettre à jour le transporteur existant dans OrderCarrier
+            $orderCarrier->update([
+                'carrier_id' => $carrierId,
+                'name' => $carrier->name,
+                'description' => $carrier->description,
+                'price' => $carrier->price,
+            ]);
+        } else {
+            // Créer une nouvelle entrée dans la table OrderCarrier
+            $orderCarrier = new OrderCarrier([
+                'order_id' => $order->id,
+                'carrier_id' => $carrierId,
+                'name' => $carrier->name,
+                'description' => $carrier->description,
+                'price' => $carrier->price,
+            ]);
+            $orderCarrier->save();
         }
 
         return redirect()->route('shipping');

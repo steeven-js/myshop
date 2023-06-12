@@ -30,13 +30,6 @@ class CartController extends Controller
             $somme = ($itemCart->quantity * $itemCart->prix) + $somme;
         }
 
-        $orders = Order::where('statut', 0)->get();
-
-        foreach ($orders as $order) {
-            $order->cleanOrder();
-        }
-        
-
         return view('cart', compact('carts', 'products', 'categories', 'somme'));
     }
 
