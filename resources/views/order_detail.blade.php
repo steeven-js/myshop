@@ -72,17 +72,31 @@
                                             <strong class="text-color-dark">Produit(s)</strong>
                                         </td>
                                     </tr>
-                                    @foreach ($orderDetails as $item)
+                                    @foreach ($orderDetails as $index => $item)
                                         <tr>
                                             <td>
-                                                <strong
-                                                    class="d-block text-color-dark line-height-1 font-weight-semibold">{{ $item->product_name }}
-                                                    <span class="product-qty">x{{ $item->quantity }}</span></strong>
-                                                <span class="text-1">{{ $item->category_name }}</span>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="w-100">
+                                                        <strong
+                                                            class="d-block text-color-dark line-height-1 font-weight-semibold">{{ $item->product_name }}
+                                                            <span class="product-qty">x{{ $item->quantity }}</span></strong>
+                                                        <span class="text-1">{{ $item->category_name }}</span>
+                                                    </div>
+                                                    <div class="w-100">
+                                                        @if (isset($product_image[$index]->image))
+                                                            <!-- Vérifie si une image existe pour le produit correspondant à l'index actuel ($index) -->
+                                                            <img class="ml-2"
+                                                                src="{{ asset('storage/' . $product_image[$index]->image) }}"
+                                                                alt="" style="width: 15%">
+                                                            <!-- Affiche l'image du produit avec un chemin relatif -->
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td class="text-end align-top">
                                                 <span
                                                     class="amount font-weight-medium text-color-grey">{{ $item->prix }}€</span>
+                                                <!-- Affiche le prix du produit -->
                                             </td>
                                         </tr>
                                     @endforeach
@@ -100,8 +114,18 @@
                                             <strong class="text-color-dark">Livraison</strong>
                                         </td>
                                         <td class="border-top-0 text-end">
-                                            <strong><span class="amount font-weight-medium">Livraison
-                                                    gratuite</span></strong>
+                                            <strong>
+                                                <span class="amount font-weight-medium">
+                                                    @if ($selectedCarrier)
+                                                        <p>
+                                                            {{ $selectedCarrier->name }}
+                                                            {{ $selectedCarrier->price }}€
+                                                        </p>
+                                                    @else
+                                                        <p>No carrier selected.</p>
+                                                    @endif
+                                                </span>
+                                            </strong>
                                         </td>
                                     </tr>
                                     <tr class="total">
@@ -115,6 +139,18 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <p>Selected Address:</p>
+                            @if ($selectedAddress)
+                                <p>
+                                    <strong>Address:</strong> {{ $selectedAddress->address }}<br>
+                                    <strong>Postal Code:</strong> {{ $selectedAddress->postal }}<br>
+                                    <strong>City:</strong> {{ $selectedAddress->city }}<br>
+                                    <strong>Country:</strong> {{ $selectedAddress->country }}<br>
+                                    <strong>Phone:</strong> {{ $selectedAddress->phone }}<br>
+                                </p>
+                            @else
+                                <p>No address selected.</p>
+                            @endif
                         </div>
                     </div>
                 </div>
