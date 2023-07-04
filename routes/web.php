@@ -31,10 +31,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/addtocart/{product}', [CartController::class, 'addToCart'])->name('addtocart'); //Ne peut ajouter dans le panier que les utilisateurs connectés 
+    Route::get('/addtocart/{product}', [CartController::class, 'addToCart'])->name('addtocart'); //Ne peut ajouter dans le panier que les utilisateurs connectés
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
-    Route::get('/cart/del/{product}', [CartController::class, 'decrementCartItem'])->name('decrementCartItem');
-    Route::get('/cart/add/{product}', [CartController::class, 'incrementCartItem'])->name('incrementCartItem');
+    Route::get('/cart/moins/{product}', [CartController::class, 'decrementCartItem'])->name('decrementCartItem');
+    Route::get('/cart/plus/{product}', [CartController::class, 'incrementCartItem'])->name('incrementCartItem');
+    Route::get('/cart/del/{product}', [CartController::class, 'delete'])->name('cart.delete');
+    Route::get('/cart/destroy/', [CartController::class, 'clearCart'])->name('cart.destroy');
+
 
     Route::get('/cart/chekout', [CheckoutController::class, 'checkout'])->name('checkout');
 
@@ -76,5 +79,5 @@ Route::get('/', [ProductController::class, 'index'])->name('welcome');
 // Route pour filtrer les categories
 Route::get('/filtre/{category}', [ProductController::class, 'index'])->name('welcome.filtre');
 
-// Route pour afficher le détail de chaques produits 
+// Route pour afficher le détail de chaques produits
 Route::get('/detail/{product}', [ProductController::class, 'detail'])->name('welcome.detail');

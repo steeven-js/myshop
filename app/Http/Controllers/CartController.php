@@ -36,7 +36,7 @@ class CartController extends Controller
 
     /*
         Méthode qui permet d'ajouter dans le caddie
-        D'ajouter ou de modifier dans le caddie 
+        D'ajouter ou de modifier dans le caddie
         Il vérifie si la quantité existe
         Si la quantité existe il exécute une action
     */
@@ -44,15 +44,15 @@ class CartController extends Controller
     public function addToCart(Product $product)
     {
 
-        // Vérification du produit dans le panier 
-        // Sélectionner le produit quand il a été ajouté par l'utilisateur 
-        // SELECT * FROM Carts WHERE user_id = "?" AND product_id = $product -> id LIMIT(0, 1) 
+        // Vérification du produit dans le panier
+        // Sélectionner le produit quand il a été ajouté par l'utilisateur
+        // SELECT * FROM Carts WHERE user_id = "?" AND product_id = $product -> id LIMIT(0, 1)
 
         $cart = Cart::Where('user_id', Auth::user()->id)
             ->Where('product_id', $product->id)
             ->first();
 
-        // Penser à controler l'existence du produit 
+        // Penser à controler l'existence du produit
 
         if (isset($cart)) {
 
@@ -69,7 +69,7 @@ class CartController extends Controller
             ]);
         };
 
-        // Ajouter ou supprimer le produit 
+        // Ajouter ou supprimer le produit
 
         return redirect(route('cart'));
     }
@@ -121,8 +121,31 @@ class CartController extends Controller
         return redirect(route('cart'));
     }
 
-    public function delete()
+    public function delete(Product $product)
     {
-        # code...
+        // Vérifier si le produit existe dans le panier de l'utilisateur
+        $cartItem = Cart::where('user_id', Auth::user()->id)
+            ->where('product_id', $product->id)
+            ->first();
+
+        // Vérifier si l'élément du panier existe
+        if (!$cartItem) {
+            return redirect()->back()->with('error', 'L\'élément du panier n\'existe pas.');
+        }
+
+        // dd($product);
+
+        // Supprimer l'élément du panier
+        $cartItem->delete();
+
+        return redirect(route('cart'));
+    }
+
+    public function clearCart()
+    {
+        // Supprimer tous les éléments du panier pour l'utilisateur connecté
+        Cart::where('user_id', Auth::user()->id)->delete();
+
+        return redirect(route('cart'))->with('success', 'Le panier a été vidé avec succès.');
     }
 }
