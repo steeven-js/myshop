@@ -84,7 +84,7 @@
                         </tr>
                         @empty
                             @if (!$orders)
-                                <p>Vous n'avez pas de commande. <a href="{{ route('welcome') }}">Parcourez notre catalogue de
+                                <p>Vous n'avez pas de commande. <a href="{{ route('home') }}">Parcourez notre catalogue de
                                         produits</a></p>
                             @endif
                         @endforelse

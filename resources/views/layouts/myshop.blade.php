@@ -53,7 +53,7 @@
                         <div class="header-column w-100">
                             <div class="header-row justify-content-between">
                                 <div class="header-logo z-index-2 col-lg-2 px-0">
-                                    <a href="{{ route('welcome') }}">
+                                    <a href="{{ route('home') }}">
                                         <img alt="Porto" width="100" height="48" data-sticky-width="82"
                                             data-sticky-height="40" data-sticky-top="84"
                                             src="/img/logo-default-slim.png">

@@ -37,7 +37,7 @@
                                                     class="product-thumbnail-remove" title="Remove Product">
                                                     <i class="fas fa-times"></i>
                                                 </a>
-                                                <a href="{{ route('welcome.detail', $itemCart->product->id) }}"
+                                                <a href="{{ route('home.detail', $itemCart->product->id) }}"
                                                     class="product-thumbnail-image" title="">
                                                     <img width="90" height="90" alt="" class="img-fluid"
                                                         src="{{ Storage::url($itemCart->product->image) }}">
@@ -45,7 +45,7 @@
                                             </div>
                                         </td>
                                         <td class="product-name">
-                                            <a href="{{ route('welcome.detail', $itemCart->product->id) }}"
+                                            <a href="{{ route('home.detail', $itemCart->product->id) }}"
                                                 class="font-weight-semi-bold text-color-dark text-color-hover-primary text-decoration-none">{{ $itemCart->product->name }}</a>
                                         </td>
                                         <td class="product-price">
@@ -152,7 +152,7 @@
                             <p>Le panier est vide.</p>
                         @endif
                     @else
-                        <a href="{{ route('checkout') }}"
+                        <a href="{{ route('order.recap') }}"
                             class="btn btn-dark btn-modern w-100 text-uppercase bg-color-hover-primary border-color-hover-primary border-radius-0 text-3 py-3">Proceed
                             to Checkout <i class="fas fa-arrow-right ms-2"></i></a>
                         @endif

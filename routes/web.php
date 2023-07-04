@@ -38,14 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart/del/{product}', [CartController::class, 'delete'])->name('cart.delete');
     Route::get('/cart/destroy/', [CartController::class, 'clearCart'])->name('cart.destroy');
 
+    Route::get('/commande/recapitutulatif', [OrderController::class, 'add'])->name('order.recap');
+    Route::post('/commande/recapitutulatif', [OrderController::class, 'store'])->name('order.recap.store');
 
-    Route::get('/cart/chekout', [CheckoutController::class, 'checkout'])->name('checkout');
-
-    Route::get('/cart/shipping', [ShippingController::class, 'shipping'])->name('shipping');
-    Route::post('/cart/shipping', [ShippingController::class, 'store'])->name('shipping.store');
-
-
-    Route::get('/cart/confirm', [ConfirmCheckoutController::class, 'index'])->name('confirm');
+    Route::get('/commande/chekout', [CheckoutController::class, 'checkout'])->name('checkout');
 
     Route::get('/commande/create-session/{reference}', [StripeController::class, 'stripe_create_session'])->name('stripe');
 
@@ -74,10 +70,10 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 // Route pour lister les produits
-Route::get('/', [ProductController::class, 'index'])->name('welcome');
+Route::get('/', [ProductController::class, 'index'])->name('home');
 
 // Route pour filtrer les categories
-Route::get('/filtre/{category}', [ProductController::class, 'index'])->name('welcome.filtre');
+Route::get('/filtre/{category}', [ProductController::class, 'index'])->name('home.filtre');
 
 // Route pour afficher le détail de chaques produits
-Route::get('/detail/{product}', [ProductController::class, 'detail'])->name('welcome.detail');
+Route::get('/detail/{product}', [ProductController::class, 'detail'])->name('home.detail');

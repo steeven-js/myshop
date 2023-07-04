@@ -17,7 +17,7 @@
                 QUICK VIEW
             </a>
 
-            <a href="{{route('welcome.detail', $itemProduct)}}">
+            <a href="{{route('home.detail', $itemProduct)}}">
                 <div class="product-thumb-info-image">
 
                     @if (isset($itemProduct->image))

@@ -56,7 +56,7 @@
                             </td>
                         </tr>
                     @empty
-                        <p>Vous n'avez pas de commande. <a href="{{ route('welcome') }}">Parcourez notre catalogue de produits</a></p>
+                        <p>Vous n'avez pas de commande. <a href="{{ route('home') }}">Parcourez notre catalogue de produits</a></p>
                     @endforelse
 
                 </tbody>
