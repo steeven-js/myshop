@@ -1,44 +1,112 @@
 @extends('layouts.myshop')
 @section('main')
-    <form action="{{ !empty($address) ? route('address.edit', $address->id) : route('address.add') }}" method="post">
-        {{-- @dump($request) --}}
-        @csrf
+    <div class="row">
+        <div class="col-lg-3 order-2 order-lg-1">
 
-        <label for="name" class="">
-            name
-        </label>
-        <input type="text" name="name" placeholder="Sasissez un  name" value="{{ !empty($address) ? $address->name : '' }}">
+            <aside class="sidebar mt-2 mb-5">
+                <h5 class="font-weight-semi-bold">Dashboard</h5>
+                <ul class="nav nav-list flex-column">
 
-        <label for="company" class="">
-            company
-        </label>
-        <input type="text" name="company" placeholder="Sasissez un  company" value="{{ !empty($address) ? $address->company : '' }}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('order') }}">Mes commandes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('address') }}">Mes adresses</a>
+                    </li>
+                </ul>
+            </aside>
 
-        <label for="address" class="">
-            address
-        </label>
-        <input type="text" name="address" placeholder="Sasissez un  address" value="{{ !empty($address) ? $address->address : '' }}">
+        </div>
+        <div class="col-lg-9 order-1 order-lg-2">
 
-        <label for="postal" class="">
-            postal
-        </label>
-        <input type="text" name="postal" placeholder="Sasissez un  postal" value="{{ !empty($address) ? $address->postal : '' }}">
+            <div class="tab-pane tab-pane-navigation active" id="formsStyleDefault">
 
-        <label for="city" class="">
-            city
-        </label>
-        <input type="text" name="city" placeholder="Sasissez un  city" value="{{ !empty($address) ? $address->city : '' }}">
+                <h4 class="mb-3">{{ !empty($address) ? 'Modifier une adresse' : 'Créer une adresse' }}</h4>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <form
+                                    action="{{ !empty($address) ? route('address.edit', $address->id) : route('address.add') }}"
+                                    method="post">
+                                    {{-- @dump($request) --}}
+                                    @csrf
+                                    <div class="contact-form-success alert alert-success d-none mt-4">
+                                        <strong>Success!</strong> Your message has been sent to us.
+                                    </div>
 
-        <label for="country" class="">
-            country
-        </label>
-        <input type="text" name="country" placeholder="Sasissez un  country" value="{{ !empty($address) ? $address->country : '' }}">
+                                    <div class="contact-form-error alert alert-danger d-none mt-4">
+                                        <strong>Error!</strong> There was an error sending your message.
+                                        <span class="mail-error-message text-1 d-block"></span>
+                                    </div>
 
-        <label for="phone" class="">
-            phone
-        </label>
-        <input type="text" name="phone" placeholder="Sasissez un  phone" value="{{ !empty($address) ? $address->phone : '' }}">
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="name" class="form-label mb-1 text-2">Nom</label>
+                                            <input type="text" value="{{ !empty($address) ? $address->name : '' }}"
+                                                data-msg-required="Please enter your name." maxlength="100"
+                                                class="form-control text-3 h-auto py-2" name="name">
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="company" class="form-label mb-1 text-2">Company</label>
+                                            <input type="text" value="{{ !empty($address) ? $address->company : '' }}"
+                                                data-msg-required="Please enter your name." maxlength="100"
+                                                class="form-control text-3 h-auto py-2" name="company">
+                                        </div>
 
-        <button type="submit">Créer</button>
-    </form>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col">
+                                            <label for="address" class="form-label mb-1 text-2">Adresse</label>
+                                            <input type="text" value="{{ !empty($address) ? $address->address : '' }}"
+                                                data-msg-required="Please enter your name." maxlength="100"
+                                                class="form-control text-3 h-auto py-2" name="address">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="city" class="form-label mb-1 text-2">Ville</label>
+                                            <input type="text" value="{{ !empty($address) ? $address->city : '' }}"
+                                                data-msg-required="Please enter your name." maxlength="100"
+                                                class="form-control text-3 h-auto py-2" name="city">
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="postal" class="form-label mb-1 text-2">Code postal</label>
+                                            <input type="text" value="{{ !empty($address) ? $address->postal : '' }}"
+                                                data-msg-required="Please enter your name." maxlength="100"
+                                                class="form-control text-3 h-auto py-2" name="postal">
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="country" class="form-label mb-1 text-2">Pays</label>
+                                            <input type="text" value="{{ !empty($address) ? $address->country : '' }}"
+                                                data-msg-required="Please enter your name." maxlength="100"
+                                                class="form-control text-3 h-auto py-2" name="country">
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="Phone" class="form-label mb-1 text-2">Phone</label>
+                                            <input type="text" value="{{ !empty($address) ? $address->Phone : '' }}"
+                                                data-msg-required="Please enter your name." maxlength="100"
+                                                class="form-control text-3 h-auto py-2" name="Phone">
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col">
+                                            <input type="submit" value="Submit Form" class="btn btn-primary"
+                                                data-loading-text="Loading...">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
 @endsection
