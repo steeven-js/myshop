@@ -25,9 +25,9 @@
                                 <tr>
                                     <td>{{ $orderDetail->product_name }}</td>
                                     <td>{{ $orderDetail->category_name }}</td>
-                                    <td>{{ $orderDetail->quantity }}</td>
-                                    <td>{{ $orderDetail->prix }}</td>
-                                    <td>{{ $orderDetail->quantity * $orderDetail->prix }}</td>
+                                    <td>x{{ $orderDetail->quantity }}</td>
+                                    <td>{{ $orderDetail->prix }}€</td>
+                                    <td>{{ $orderDetail->quantity * $orderDetail->prix }}€</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -51,8 +51,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Transporteur:</h5>
                             <p>Nom: {{ $carrier->name }}</p>
-                            <p>Prix: {{ $carrier->price }}</p>
-                            <p>Description: {{ $carrier->description }}</p>
+                            <p>Prix: {{ $carrier->price }}€</p>
                         </div>
                     </div>
                 </div>

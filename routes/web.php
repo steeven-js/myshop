@@ -38,8 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart/del/{product}', [CartController::class, 'delete'])->name('cart.delete');
     Route::get('/cart/destroy/', [CartController::class, 'clearCart'])->name('cart.destroy');
 
-    Route::get('/commande/recapitutulatif', [OrderController::class, 'add'])->name('order.recap');
-    Route::post('/commande/recapitutulatif', [OrderController::class, 'store'])->name('order.recap.store');
+    Route::get('/commande', [OrderController::class, 'add'])->name('order.recap');
+    Route::post('/commande', [OrderController::class, 'store'])->name('order.recap.store');
 
     Route::get('/commande/chekout', [CheckoutController::class, 'checkout'])->name('checkout');
 
