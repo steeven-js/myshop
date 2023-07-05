@@ -12,17 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('addresses', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->string('name');
-            $table->string('company');
+            $table->string('company')->nullable();
             $table->string('address');
             $table->string('postal');
             $table->string('city');
             $table->string('country');
             $table->string('phone');
             $table->timestamps();
+            $table->text('full_address')->nullable();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

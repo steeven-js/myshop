@@ -21,8 +21,9 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products');
 
             $table->integer('quantity');
-
-            $table->decimal('prix', 8 ,2, true);
+            $table->decimal('prix', 8, 2);
+            $table->string('product_name', 150);
+            $table->string('category_name', 150);
 
             $table->timestamps();
         });

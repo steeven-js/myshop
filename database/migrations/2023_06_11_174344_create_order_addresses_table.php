@@ -12,6 +12,7 @@ class CreateOrderAddressesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->unsignedBigInteger('address_id');
             $table->string('address');
             $table->string('postal_code');
             $table->string('city');

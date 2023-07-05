@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('carriers', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->decimal('price', 8, 2, true);
+            $table->unsignedDecimal('price', 8, 2);
             $table->timestamps();
         });
     }
